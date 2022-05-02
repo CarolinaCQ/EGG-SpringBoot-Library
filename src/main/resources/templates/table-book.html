@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head th:replace="fragments/head :: head"></head>
+
+    <body>
+
+        <header th:replace="fragments/header :: header"></header>
+
+        <div class="container">
+            <div class="row mt-5">
+                <div class="col">
+
+                    <div th:if="${success}" th:text="${success}" class="alert alert-info"></div>
+
+                    <div th:if="${books.isEmpty()}">
+                        <p class="alert alert-info">No existen libros</p>
+                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}">Crear libros</a>
+                    </div>
+
+                    <div th:unless="${books.isEmpty()}" class="row row-cols-3 gy-4">
+                        <div class="card h-100" th:each="book : ${books}">
+                            <div class="card-body">
+                                <h4 class="card-title" th:text="${book.title}"></h4>
+                                <h5 class="card-title" th:text="|Autor: ${book.author.name} ${book.author.surname}|"></h5>
+                                <p class="card-text" th:text="|Editorial: ${book.editorial.name}|"></p>
+                                <p class="card-text" th:text="|ISBN: ${book.isbn}|"></p>
+                                <p class="card-text" th:text="|Año de publicación: ${book.year}|"></p>
+                                <p class="card-text" th:text="|Cantidad de ejemplares: ${book.copies}|"></p>
+                                <p class="card-text" th:text="|Cantidad de ejemplares prestados: ${book.borrowedCopies}|"></p>
+                                <p class="card-text" th:text="|Cantidad de ejemplares restantes: ${book.remainingCopies}|"></p>
+                                <div class="d-flex flex-row justify-content-end">
+                                    <a class="btn btn-primary mx-3" th:href="@{/books/form/__${book.id}__}">Editar</a></td>
+                                    <form th:action="@{/books/delete/__${book.id}__}" method="POST">
+                                        <button type="submit" class="btn btn-danger" >Dar de baja</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div th:unless="${books.isEmpty()}" class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="col-1">ISBN</th>
+                                    <th class="col-1">Título</th>
+                                    <th class="col-1">Año</th>
+                                    <th class="col-1">Ejemplares</th>
+                                    <th class="col-1">Prestados</th>
+                                    <th class="col-1">Restantes</th>
+                                    <th class="col-2">Autor</th>
+                                    <th class="col-2">Editorial</th>
+                                    <th class="col-1">Editar</th>
+                                    <th class="col-1">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="book : ${books}">
+                                    <td th:text="${book.isbn}"></td>
+                                    <td th:text="${book.title}"></td>
+                                    <td th:text="${book.year}"></td>
+                                    <td th:text="${book.copies}"></td>
+                                    <td th:text="${book.borrowedCopies}"></td>
+                                    <td th:text="${book.remainingCopies}"></td>
+                                    <td th:text="|${book.author.name} ${book.author.surname}|"></td>
+                                    <td th:text="${book.editorial.name}"></td>
+                                    <td><a class="btn btn-primary" th:href="@{/books/form/__${book.id}__}">Editar</a></td>
+                                    <td>
+                                        <form th:action="@{/books/delete/__${book.id}__}" method="POST">
+                                            <button type="submit" class="btn btn-danger">Baja</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js}" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

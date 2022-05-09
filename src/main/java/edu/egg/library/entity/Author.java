@@ -9,12 +9,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name="author")
 @SQLDelete(sql="UPDATE author SET low_author=true WHERE id_author=?")
-@Where(clause="low_author=false")
 public class Author implements Serializable {
     @Id
     @Column(name="id_author")

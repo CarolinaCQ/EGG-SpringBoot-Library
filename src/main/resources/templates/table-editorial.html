@@ -14,8 +14,8 @@
                     <div th:if="${success}" th:text="${success}" class="alert alert-info"></div>
                     
                     <div th:if="${editorials.isEmpty()}">
-                        <p class="alert alert-info">No existen libros</p>
-                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}">Crear libros</a>
+                        <p class="alert alert-info">No existen editoriales</p>
+                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Agregar editorial</a>
                     </div>
                     
                     <div th:unless="${editorials.isEmpty()}" class="table-responsive">
@@ -23,8 +23,8 @@
                             <thead>
                                 <tr>
                                     <th class="col-4">Nombre</th>
-                                    <th class="col-4">Editar editorial</th>
-                                    <th class="col-4">Eliminar editorial</th>
+                                    <th class="col-4" sec:authorize="hasRole('ADMIN')">Editar editorial</th>
+                                    <th class="col-4" sec:authorize="hasRole('ADMIN')">Eliminar editorial</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -1,7 +1,7 @@
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand px-5" th:href="@{/}">Biblioteca</a>
+            <a class="navbar-brand px-5" th:href="@{/inicio}">Biblioteca</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Show / Hide Menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -11,10 +11,10 @@
                         <a class="nav-link dropdown-toggle pr-5" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Libros</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/books/form}">Administración Libros</a>
+                                <a class="dropdown-item text-light" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Administración Libros</a>
                             </li>
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/books/get-all}">Lista Libros</a>
+                                <a class="dropdown-item text-light" th:href="@{/books/get-all}">Lista de libros</a>
                             </li>
                         </ul>
                     </li>
@@ -22,10 +22,10 @@
                         <a class="nav-link dropdown-toggle pr-5" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Autores</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/authors/form}">Administración Autores</a>
+                                <a class="dropdown-item text-light" th:href="@{/authors/form}" sec:authorize="hasRole('ADMIN')">Administración Autores</a>
                             </li>
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/authors/get-all}">Lista Autores</a>
+                                <a class="dropdown-item text-light" th:href="@{/authors/get-all}">Lista de autores</a>
                             </li>
                         </ul>
                     </li>
@@ -33,12 +33,15 @@
                         <a class="nav-link dropdown-toggle pr-5" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Editoriales</a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/editorials/form}">Administración Editoriales</a>
+                                <a class="dropdown-item text-light" th:href="@{/editorials/form}" sec:authorize="hasRole('ADMIN')">Administración Editoriales</a>
                             </li>
                             <li>
-                                <a class="dropdown-item text-light" th:href="@{/editorials/get-all}">Lista Editoriales</a>
+                                <a class="dropdown-item text-light" th:href="@{/editorials/get-all}">Lista de editoriales</a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">Salir</a>
                     </li>
                 </ul>
             </div>

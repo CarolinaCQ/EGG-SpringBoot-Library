@@ -53,6 +53,15 @@ public class BookService {
     }
     
     @Transactional
+    public void updateLow(Book book2){
+        Book book = bookRepository.findById(book2.getId()).get();
+        
+        book.setLow(false);
+        
+        bookRepository.save(book);
+    }
+    
+    @Transactional
     public void deleteById(Book book2){
         Book book = bookRepository.findById(book2.getId()).get();
         bookRepository.delete(book);
@@ -66,5 +75,14 @@ public class BookService {
     @Transactional(readOnly = true)
     public Book getById(Long id) {
         return bookRepository.findById(id).get();
+    }
+    
+    public boolean getLow(Long id){
+        return bookRepository.findById(id).get().getLow();
+    }
+    
+    @Transactional
+    public List<Book> getHigh(Boolean high){
+        return bookRepository.findByLow(high);
     }
 }

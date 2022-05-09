@@ -12,12 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name="book")
 @SQLDelete(sql="UPDATE book SET low_book = true WHERE id_book=?")
-@Where(clause="low_book = false")
 public class Book implements Serializable {
     
     @Id

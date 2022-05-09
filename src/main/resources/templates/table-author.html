@@ -14,8 +14,8 @@
                     <div th:if="${success}" th:text="${success}" class="alert alert-info"></div>
                     
                     <div th:if="${authors.isEmpty()}">
-                        <p class="alert alert-info">No existen libros</p>
-                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}">Crear libros</a>
+                        <p class="alert alert-info">No existen autores</p>
+                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Agregar autor</a>
                     </div>
                     
                     <div th:unless="${authors.isEmpty()}" class="table-responsive">
@@ -24,8 +24,8 @@
                                 <tr>
                                     <th class="col-3">Nombre</th>
                                     <th class="col-3">Apellido</th>
-                                    <th class="col-3">Editar autor</th>
-                                    <th class="col-3">Eliminar autor</th>
+                                    <th class="col-3" sec:authorize="hasRole('ADMIN')">Editar autor</th>
+                                    <th class="col-3" sec:authorize="hasRole('ADMIN')">Eliminar autor</th>
                                 </tr>
                             </thead>
                             <tbody>

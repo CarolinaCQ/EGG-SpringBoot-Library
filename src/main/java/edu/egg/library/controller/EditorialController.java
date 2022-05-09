@@ -6,6 +6,7 @@ import edu.egg.library.service.EditorialService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ public class EditorialController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form")
     public ModelAndView getFormEditorial(){
         ModelAndView mav = new ModelAndView("form-editorial");
@@ -47,6 +49,7 @@ public class EditorialController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form/{id}")
     public ModelAndView getForm(@PathVariable Long id){  
         ModelAndView mav = new ModelAndView("form-editorial");
@@ -55,6 +58,7 @@ public class EditorialController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public RedirectView createEditorial(Editorial editorial, RedirectAttributes attributes){
         editorialService.create(editorial);
@@ -62,6 +66,7 @@ public class EditorialController {
         return new RedirectView("/editorials/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public RedirectView updateEditorial(Editorial editorial, RedirectAttributes attributes){
         editorialService.update(editorial);
@@ -69,6 +74,7 @@ public class EditorialController {
         return new RedirectView("/editorials/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public RedirectView deleteEditorial(Editorial editorial){
         editorialService.deleteById(editorial);

@@ -8,6 +8,7 @@ import edu.egg.library.service.EditorialService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +43,11 @@ public class BookController {
         if(inputFlashMap!=null) mav.addObject("success", inputFlashMap.get("success"));
         
         mav.addObject("books", bookService.getAll());
+        
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form")
     public ModelAndView getFormBook(){
         ModelAndView mav = new ModelAndView("form-book");
@@ -55,6 +58,7 @@ public class BookController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form/{id}")
     public ModelAndView getForm(@PathVariable Long id){  
         ModelAndView mav = new ModelAndView("form-book");
@@ -65,6 +69,7 @@ public class BookController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public RedirectView createBook(Book book, RedirectAttributes attributes){
         bookService.create(book);
@@ -72,6 +77,7 @@ public class BookController {
         return new RedirectView("/books/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public RedirectView updateBook(Book book, RedirectAttributes attributes){
         bookService.update(book);
@@ -79,10 +85,18 @@ public class BookController {
         return new RedirectView("/books/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/update-low/{id}")
+    public ModelAndView updateLowBook(Book book){
+        ModelAndView mav = new ModelAndView("redirect:/books/get-all");
+        bookService.updateLow(book);
+        return mav;
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public ModelAndView deleteBook(Book book){
         ModelAndView mav = new ModelAndView("redirect:/books/get-all");
-        mav.addObject("action", "delete");
         bookService.deleteById(book);
         return mav;
     }

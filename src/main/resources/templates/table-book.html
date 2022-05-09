@@ -15,24 +15,42 @@
 
                     <div th:if="${books.isEmpty()}">
                         <p class="alert alert-info">No existen libros</p>
-                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}">Crear libros</a>
+                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Agregar libro</a>
                     </div>
 
-                    <div th:unless="${books.isEmpty()}" class="row row-cols-3 gy-4">
-                        <div class="card h-100" th:each="book : ${books}">
+                    <div th:unless="${books.isEmpty()}" class="row row-cols-4 gap-2">
+                        <div class="card" style="width: 18rem;" th:each="book : ${books}">
                             <div class="card-body">
-                                <h4 class="card-title" th:text="${book.title}"></h4>
-                                <h5 class="card-title" th:text="|Autor: ${book.author.name} ${book.author.surname}|"></h5>
+                                <h5 class="card-title fw-bold" th:text="${book.title}"></h5>
+                                <p class="card-text fst-italic" th:text="|Autor: ${book.author.name} ${book.author.surname}|"></p>
                                 <p class="card-text" th:text="|Editorial: ${book.editorial.name}|"></p>
                                 <p class="card-text" th:text="|ISBN: ${book.isbn}|"></p>
                                 <p class="card-text" th:text="|Año de publicación: ${book.year}|"></p>
-                                <p class="card-text" th:text="|Cantidad de ejemplares: ${book.copies}|"></p>
-                                <p class="card-text" th:text="|Cantidad de ejemplares prestados: ${book.borrowedCopies}|"></p>
-                                <p class="card-text" th:text="|Cantidad de ejemplares restantes: ${book.remainingCopies}|"></p>
-                                <div class="d-flex flex-row justify-content-end">
-                                    <a class="btn btn-primary mx-3" th:href="@{/books/form/__${book.id}__}">Editar</a></td>
-                                    <form th:action="@{/books/delete/__${book.id}__}" method="POST">
-                                        <button type="submit" class="btn btn-danger" >Dar de baja</button>
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                Ejemplares
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <p class="fst-italic" th:text="|Total: ${book.copies}|"></p>
+                                                <p class="fst-italic" th:text="|Prestados: ${book.borrowedCopies}|"></p>
+                                                <p class="fst-italic" th:text="|Restantes: ${book.remainingCopies}|"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex flex-row justify-content-end mt-5" sec:authorize="hasRole('ADMIN')">
+                                    <a th:if="${book.low}==false" class="btn btn-primary mx-3" th:href="@{/books/form/__${book.id}__}">Editar</a></td>
+
+                                    <form th:if="${book.low}==false" th:action="@{/books/delete/__${book.id}__}" method="POST">
+                                        <button type="submit" class="btn btn-danger">Dar de baja</button>
+                                    </form>
+
+                                    <form th:if="${book.low}==true" th:action="@{/books/update-low/__${book.id}__}" method="POST">
+                                        <button type="submit" class="btn btn-success" >Dar de alta</button>
                                     </form>
                                 </div>
                             </div>

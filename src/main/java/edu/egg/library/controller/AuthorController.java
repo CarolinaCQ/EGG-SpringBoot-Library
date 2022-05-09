@@ -6,6 +6,7 @@ import edu.egg.library.service.AuthorService;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,6 +40,7 @@ public class AuthorController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form")
     public ModelAndView getFormAuthor(){
         ModelAndView mav = new ModelAndView("form-author");
@@ -47,6 +49,7 @@ public class AuthorController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/form/{id}")
     public ModelAndView getForm(@PathVariable Long id){  
         ModelAndView mav = new ModelAndView("form-author");
@@ -55,6 +58,7 @@ public class AuthorController {
         return mav;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public RedirectView createAuthor(Author author, RedirectAttributes attributes){
         authorService.create(author);
@@ -62,6 +66,7 @@ public class AuthorController {
         return new RedirectView("/authors/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public RedirectView updateAuthor(Author author, RedirectAttributes attributes){
         authorService.update(author);
@@ -69,6 +74,7 @@ public class AuthorController {
         return new RedirectView("/authors/get-all");
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public RedirectView deleteAuthor(Author author){
         authorService.deleteById(author);

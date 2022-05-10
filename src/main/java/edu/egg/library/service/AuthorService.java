@@ -41,6 +41,15 @@ public class AuthorService {
     }
     
     @Transactional
+    public void updateLow(Author author2){
+        Author author = authorRepository.findById(author2.getId()).get();
+        
+        author.setLow(false);
+        
+        authorRepository.save(author);
+    }
+    
+    @Transactional
     public void deleteById(Author author2){
         Author author = authorRepository.findById(author2.getId()).get();
         authorRepository.delete(author);

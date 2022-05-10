@@ -15,7 +15,7 @@
                     
                     <div th:if="${authors.isEmpty()}">
                         <p class="alert alert-info">No existen autores</p>
-                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Agregar autor</a>
+                        <a class="btn btn-primary" type="submit" th:href="@{/authors/form}" sec:authorize="hasRole('ADMIN')">Agregar autor</a>
                     </div>
                     
                     <div th:unless="${authors.isEmpty()}" class="table-responsive">
@@ -32,10 +32,13 @@
                                 <tr th:each="author : ${authors}">
                                     <td th:text="${author.name}"></td>
                                     <td th:text="${author.surname}"></td>
-                                    <td><a class="btn btn-primary" th:href="@{/authors/form/__${author.id}__}">Editar</a></td>
-                                    <td>
-                                        <form th:action="@{/authors/delete/__${author.id}__}" method="POST">
+                                    <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-primary" th:if="${author.low} == false" th:href="@{/authors/form/__${author.id}__}">Editar</a></td>
+                                    <td sec:authorize="hasRole('ADMIN')">
+                                        <form th:if="${author.low} == false" th:action="@{/authors/delete/__${author.id}__}" method="POST">
                                             <button type="submit" class="btn btn-danger">Dar de baja</button>
+                                        </form>
+                                        <form th:if="${author.low} == true" th:action="@{/authors/update-low/__${author.id}__}" method="POST">
+                                            <button type="submit" class="btn btn-success">Dar de alta</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -4,12 +4,11 @@ package edu.egg.library.entity;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -33,8 +32,8 @@ public class User implements Serializable {
     @Column(name="surname_user", nullable = false)
     private String surname;
     
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_rol", referencedColumnName = "id_roles", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(name="role_user")
     private Roles rol;
 
     public User() {

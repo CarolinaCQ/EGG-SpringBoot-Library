@@ -5,13 +5,15 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-controls="menu" aria-expanded="false" aria-label="Show / Hide Menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="menu">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="collapse navbar-collapse d-flex flex-row justify-content-end" id="menu">
+                <ul class="navbar-nav">
                     <li class="nav-item ">
-                        <a class="nav-link pr-5" th:href="@{/users/login}">Ingresar</a>
+                        <a class="nav-link btn btn-dark border border-light pr-5" th:href="@{/users/login}">Ingresar</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav px-5">
                     <li class="nav-item ">
-                        <a class="nav-link pr-5" th:href="@{/users/sign-up}">Registrarme</a>
+                        <a class="nav-link btn btn-dark border border-light pr-5" th:href="@{/users/sign-up}">Registrarme</a>
                     </li>
                 </ul>
             </div>

@@ -75,6 +75,13 @@ public class EditorialController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/update-low/{id}")
+    public RedirectView updateLow(Editorial editorial){
+        editorialService.updateLow(editorial);
+        return new RedirectView("/editorials/get-all");
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public RedirectView deleteEditorial(Editorial editorial){
         editorialService.deleteById(editorial);

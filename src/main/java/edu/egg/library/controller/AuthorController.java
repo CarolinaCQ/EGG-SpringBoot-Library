@@ -75,6 +75,13 @@ public class AuthorController {
     }
     
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/update-low/{id}")
+    public RedirectView updateLow(Author author){
+        authorService.updateLow(author);
+        return new RedirectView("/authors/get-all");
+    }
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/delete/{id}")
     public RedirectView deleteAuthor(Author author){
         authorService.deleteById(author);

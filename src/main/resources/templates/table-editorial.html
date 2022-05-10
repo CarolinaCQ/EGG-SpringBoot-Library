@@ -15,7 +15,7 @@
                     
                     <div th:if="${editorials.isEmpty()}">
                         <p class="alert alert-info">No existen editoriales</p>
-                        <a class="btn btn-primary" type="submit" th:href="@{/books/form}" sec:authorize="hasRole('ADMIN')">Agregar editorial</a>
+                        <a class="btn btn-primary" type="submit" th:href="@{/editorials/form}" sec:authorize="hasRole('ADMIN')">Agregar editorial</a>
                     </div>
                     
                     <div th:unless="${editorials.isEmpty()}" class="table-responsive">
@@ -30,10 +30,13 @@
                             <tbody>
                                 <tr th:each="editorial : ${editorials}">
                                     <td th:text="${editorial.name}"></td>
-                                    <td><a class="btn btn-primary" th:href="@{/editorials/form/__${editorial.id}__}">Editar</a></td>
-                                    <td>
-                                        <form th:action="@{/editorials/delete/__${editorial.id}__}" method="POST">
+                                    <td sec:authorize="hasRole('ADMIN')"><a class="btn btn-primary" th:if="${editorial.low}==false" th:href="@{/editorials/form/__${editorial.id}__}">Editar</a></td>
+                                    <td sec:authorize="hasRole('ADMIN')">
+                                        <form th:if="${editorial.low}==false" th:action="@{/editorials/delete/__${editorial.id}__}" method="POST">
                                             <button type="submit" class="btn btn-danger">Dar de baja</button>
+                                        </form>
+                                        <form th:if="${editorial.low}==true" th:action="@{/editorials/update-low/__${editorial.id}__}" method="POST">
+                                            <button type="submit" class="btn btn-success">Dar de alta</button>
                                         </form>
                                     </td>
                                 </tr>

@@ -35,6 +35,15 @@ public class EditorialService {
 
         editorialRepository.save(editorial);
     }
+    
+    @Transactional
+    public void updateLow(Editorial editorial2) {
+        Editorial editorial = editorialRepository.findById(editorial2.getId()).get();
+
+        editorial.setLow(false);
+
+        editorialRepository.save(editorial);
+    }
 
     @Transactional
     public void deleteById(Editorial editorial2) {

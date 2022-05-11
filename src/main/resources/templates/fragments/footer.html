@@ -1,0 +1,4 @@
+<footer th:fragment="footer" class="bg-dark fixed-bottom text-center py-2">  
+    <span>📚</span>
+    <span class="text-white" th:text="${session.id == null} ? 'Biblioteca' : |${session.email} ${session.role}|"></span>
+</footer>

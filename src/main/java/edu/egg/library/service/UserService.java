@@ -5,6 +5,7 @@ import edu.egg.library.entity.Roles;
 import edu.egg.library.entity.User;
 import edu.egg.library.repository.UserRepository;
 import java.util.Collections;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -54,6 +57,13 @@ public class UserService implements UserDetailsService {
         
         User user = userRepository.findByEmail(email).orElseThrow(( )-> new UsernameNotFoundException(""));
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRol());
+        
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        HttpSession session = attributes.getRequest().getSession(true);
+        
+        session.setAttribute("id", user.getId());
+        session.setAttribute("email", user.getEmail());
+        session.setAttribute("role", user.getRol());
         
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), Collections.singletonList(authority));
     }
